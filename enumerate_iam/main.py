@@ -31,9 +31,9 @@ from enumerate_iam.utils.remove_metadata import remove_metadata
 from enumerate_iam.utils.json_utils import json_encoder
 from enumerate_iam.bruteforce_tests import BRUTEFORCE_TESTS
 
-MAX_THREADS = 25
+MAX_THREADS = 10
 CLIENT_POOL = {}
-
+LOGGER_LEVEL = logging.INFO
 
 def report_arn(candidate):
     """
@@ -126,7 +126,7 @@ def get_client(access_key, secret_key, session_token, service_name, region):
 
     config = Config(connect_timeout=5,
                     read_timeout=5,
-                    retries={'max_attempts': 30},
+                    retries={'max_attempts': 2},
                     max_pool_connections=MAX_POOL_CONNECTIONS * 2)
 
     try:
@@ -140,6 +140,7 @@ def get_client(access_key, secret_key, session_token, service_name, region):
             config=config,
         )
     except:
+        logger.error(f"Failure generating client for {service_name} in {region}")
         # The service might not be available in this region
         return
 
@@ -151,13 +152,19 @@ def get_client(access_key, secret_key, session_token, service_name, region):
 def check_one_permission(arg_tuple):
     access_key, secret_key, session_token, region, service_name, operation_name = arg_tuple
     logger = logging.getLogger()
+    logger.info(f"{service_name} : {operation_name}")
 
-    service_client = get_client(access_key, secret_key, session_token, service_name, region)
+    try:
+        service_client = get_client(access_key, secret_key, session_token, service_name, region)
+    except e:
+        logger.error(e)
+
     if service_client is None:
         return
 
     try:
         action_function = getattr(service_client, operation_name)
+        logger.debug(action_function)
     except AttributeError:
         # The service might not have this action (this is most likely
         # an error with generate_bruteforce_tests.py)
@@ -171,11 +178,15 @@ def check_one_permission(arg_tuple):
     except (botocore.exceptions.ClientError,
             botocore.exceptions.EndpointConnectionError,
             botocore.exceptions.ConnectTimeoutError,
-            botocore.exceptions.ReadTimeoutError):
+            botocore.exceptions.ReadTimeoutError) as e:
+        logger.error(e)
         return
-    except botocore.exceptions.ParamValidationError:
+    except botocore.exceptions.ParamValidationError as e:
+        logger.error(e)
         logger.error('Remove %s.%s action' % (service_name, operation_name))
         return
+    except e:
+        logger.error(e)
 
     msg = '-- %s.%s() worked!'
     args = (service_name, operation_name)
@@ -188,7 +199,7 @@ def check_one_permission(arg_tuple):
 
 def configure_logging():
     logging.basicConfig(
-        level=logging.INFO,
+        level=LOGGER_LEVEL,
         format='%(asctime)s - %(process)d - [%(levelname)s] %(message)s',
     )
 

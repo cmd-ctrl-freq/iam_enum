@@ -1,7 +1,7 @@
 BRUTEFORCE_TESTS = {
     "a4b": [
         "get_conference_preference",
-        "get_device",
+        # "get_device",
         "get_invitation_configuration",
         "get_profile",
         "get_room",
@@ -155,7 +155,7 @@ BRUTEFORCE_TESTS = {
         "list_source_credentials"
     ],
     "codecommit": [
-        "get_branch",
+        # "get_branch",
         "list_repositories"
     ],
     "codedeploy": [
@@ -174,7 +174,7 @@ BRUTEFORCE_TESTS = {
         "list_webhooks"
     ],
     "codestar": [
-        "list_projects",
+        # "list_projects",
         "list_user_profiles"
     ],
     "cognito-sync": [
@@ -389,10 +389,10 @@ BRUTEFORCE_TESTS = {
         "list_clusters"
     ],
     "elasticache": [
-        "describe_cache_clusters",
+        # "describe_cache_clusters",
         "describe_cache_engine_versions",
         "describe_cache_parameter_groups",
-        "describe_cache_security_groups",
+        #"describe_cache_security_groups",
         "describe_cache_subnet_groups",
         "describe_replication_groups",
         "describe_reserved_cache_nodes",
@@ -497,8 +497,8 @@ BRUTEFORCE_TESTS = {
         "list_fleets"
     ],
     "globalaccelerator": [
-        "describe_accelerator_attributes",
-        "list_accelerators"
+        # "describe_accelerator_attributes",
+        # "list_accelerators"
     ],
     "glue": [
         "get_catalog_import_status",
@@ -683,7 +683,7 @@ BRUTEFORCE_TESTS = {
         "describe_ml_models"
     ],
     "macie": [
-        "list_member_accounts",
+        # "list_member_accounts",
         "list_s3_resources"
     ],
     "mediaconnect": [
@@ -693,7 +693,7 @@ BRUTEFORCE_TESTS = {
     "mediaconvert": [
         "describe_endpoints",
         "list_job_templates",
-        "list_jobs",
+        # "list_jobs",
         "list_presets",
         "list_queues"
     ],
@@ -1033,7 +1033,7 @@ BRUTEFORCE_TESTS = {
         "describe_association",
         "describe_available_patches",
         "describe_inventory_deletions",
-        "describe_maintenance_window_schedule",
+        # "describe_maintenance_window_schedule",
         "describe_maintenance_windows",
         "describe_patch_baselines",
         "describe_patch_groups",
@@ -1088,7 +1088,7 @@ BRUTEFORCE_TESTS = {
         "list_activated_rules_in_rule_group",
         "list_byte_match_sets",
         "list_geo_match_sets",
-        "list_ip_sets",
+        # "list_ip_sets",
         "list_logging_configurations",
         "list_rate_based_rules",
         "list_regex_match_sets",
@@ -1123,7 +1123,7 @@ BRUTEFORCE_TESTS = {
         "get_resources"
     ],
     "worklink": [
-        "list_fleets"
+        # "list_fleets"
     ],
     "workmail": [
         "list_organizations"
